@@ -7,9 +7,9 @@
 
     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
       <li><a href="{{ route('master')}}" class="nav-link px-2 link-secondary">Home</a></li>
-      <li><a href="{{ route('genti.index')}}" class="nav-link px-2 link-dark">Genti</a></li>
-      <li><a href="{{ route('rucsacuri.index')}}" class="nav-link px-2 link-dark">Rucsacuri</a></li>
-      <li><a href="{{ route('portofele.index')}}" class="nav-link px-2 link-dark">Portofele</a></li>
+      <li><a href="{{ route('category', ['category' => 'genti'])}}" class="nav-link px-2 link-dark">Genti</a></li>
+      <li><a href="{{ route('category', ['category' => 'rucsacuri'])}}" class="nav-link px-2 link-dark">Rucsacuri</a></li>
+      <li><a href="{{ route('category', ['category' => 'portofele'])}}" class="nav-link px-2 link-dark">Portofele</a></li>
       <li><a href="{{ route('shoppingCart') }}" class="nav-link px-2 link-dark">Shopping Cart</a></li>
     </ul>
 

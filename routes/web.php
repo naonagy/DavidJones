@@ -3,9 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ClproductController;
-use App\Http\Controllers\GentiController;
-use App\Http\Controllers\RucsacuriController;
-use App\Http\Controllers\PortofeleController;
 
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
@@ -37,12 +34,10 @@ require __DIR__.'/auth.php';
 Route::resource("products", ProductController::class);
 
 Route::resource("produse", ClproductController::class);
-Route::get('produse/categorie/{category}', [ClproductController::class,'genti']);
+Route::get('produse/categorie/{category}', [ClproductController::class,'categorie'])
+        ->whereIn('category', ['genti', 'rucsacuri', 'portofele'])
+        ->name('category');
 
-
-Route::resource('genti', GentiController::class);
-Route::resource('rucsacuri', RucsacuriController::class);
-Route::resource('portofele', PortofeleController::class);
 
 Route::resource("orders", OrderController::class);
 //Route::resource("orders/{order}", OrderlineController::class);

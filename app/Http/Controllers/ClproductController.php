@@ -123,11 +123,12 @@ class ClproductController extends Controller
         //$data= Product::where('product_category','=', 'Genti')->paginate(9);
         //return view('clientside.genti',compact('data'))->with('i',(request()->input('page',1)-1*9));
     }
-    public function genti()
+    public function categorie($category)
     {
-        $data= Product::where('product_category','=', 'Genti')->paginate(9);
-        return view('clientside.genti',compact('data'))->with('i',(request()->input('page',1)-1*9));
+        $data= Product::where('product_category','=', $category)->paginate(9);
+        return view('clientside.products',compact('data'))->with('i',(request()->input('page',1)-1*9));
     }
+    
     
 
 }
