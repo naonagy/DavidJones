@@ -21,7 +21,6 @@
   </ul>
 </div>
 
-
 <div class="col-md-5 offset-md-1 mb-3">
   <form>
     <h5>Aboneaza-te la newsletter</h5>
