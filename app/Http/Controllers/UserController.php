@@ -46,9 +46,9 @@ class UserController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        return view('workspace.customers.show', compact("user"));
+        return view('workspace.customers.show',  ['user'=> User::findOrFail($id)]);
     }
 
     /**
