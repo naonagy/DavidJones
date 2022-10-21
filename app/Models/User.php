@@ -49,4 +49,9 @@ class User extends Authenticatable
         else
             return false;
     }
+
+    public function cart()
+    {
+    return $this->hasMany(Cart::class, 'customer_id', 'id')->withDefault();
+    }
 }

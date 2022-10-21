@@ -8,7 +8,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-
+use App\Http\Controllers\CartController;
+use App\Models\Cart;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,10 +53,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     ->whereIn('category', ['genti', 'rucsacuri', 'portofele'])
     ->name('category');
 
-    Route::get('/shoppingCart', function () {
-        return view('clientside.shoppingCart');
-    })->name('shoppingCart');
+    Route::resource("shoppingCart", CartController::class);
 
+    Route::get('shoppingCart/addToCart/{id}', [CartController::class, 'addToCart'])->name('addToCart');
 });
 
 

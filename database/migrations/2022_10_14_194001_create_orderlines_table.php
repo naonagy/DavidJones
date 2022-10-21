@@ -15,10 +15,16 @@ return new class extends Migration
     {
         Schema::create('orderlines', function (Blueprint $table) {
             $table->id();
-            $table->string('order_id');
-            $table->string('product_id');
+            $table->foreign('order_id')
+            ->references('id')
+            ->on('users');
+            $table->foreign('product_id')
+            ->references('id')
+            ->on('products');
             $table->integer('quantity');
-            $table->decimal('price_each');
+            $table->foreign('price_each')
+            ->references('product_price')
+            ->on('products');
         });
     }
 

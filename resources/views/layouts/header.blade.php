@@ -10,7 +10,7 @@
       <li><a href="{{ route('category', ['category' => 'genti'])}}" class="nav-link px-2 link-dark">Genti</a></li>
       <li><a href="{{ route('category', ['category' => 'rucsacuri'])}}" class="nav-link px-2 link-dark">Rucsacuri</a></li>
       <li><a href="{{ route('category', ['category' => 'portofele'])}}" class="nav-link px-2 link-dark">Portofele</a></li>
-      <li><a href="{{ route('shoppingCart') }}" class="nav-link px-2 link-dark">Shopping Cart</a></li>
+      <li><a href="{{ route('shoppingCart.index') }}" class="nav-link px-2 link-dark">Shopping Cart</a></li>
     </ul>
 
     

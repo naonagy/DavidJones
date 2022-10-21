@@ -38,7 +38,7 @@
                 </div>
                 <div>
 					{{$product->quantity}}
-                    <button>Adauga in cos</button>
+                <a href="{{ route('addToCart', $product->id)}}" class="nav-link px-2 link-dark">Adauga in cos</a>
                 </div>
                 <div>
 					{{$product->id}}

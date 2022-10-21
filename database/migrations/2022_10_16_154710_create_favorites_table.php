@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('favorites', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('customer_id');
+            $table->foreign('customer_id')
+            ->references('id')
+            ->on('users');
             $table->bigInteger('product_id');
             $table->decimal('price_each');
             $table->timestamps();

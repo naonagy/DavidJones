@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('customer_id');
+            $table->foreign('customer_id')
+            ->references('order_id')
+            ->on('orders');
             $table->enum('status',['Comanda noua','Comanda anulata','Comanda livrata', 'Returnata']);
             $table->decimal('total_price');
             $table->timestamps();
