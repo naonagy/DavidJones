@@ -13,7 +13,6 @@ class Product extends Model
     
     public function Cart()
     {
-        return $this->belongsTo(Cart::class, 'id', 'product_id');
-        return $this->belongsTo(Cart::class, 'product_price', 'product_price');
+        return $this->belongsToMany(Cart::class);
     }
 }

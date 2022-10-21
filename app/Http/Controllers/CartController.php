@@ -29,7 +29,8 @@ class CartController extends Controller
     {
         $user = Auth::user();
         $cart = Cart::whereBelongsTo($user)->get();
-        return view('clientside.shoppingCart',compact('cart'));
+
+        return view('clientside.shoppingCart', compact('cart'));
 
     }
 
@@ -105,27 +106,30 @@ class CartController extends Controller
     {
         //
     }
-    public function addToCart(Request $request, $id)
+    public function addToCart(Request $request)
     {
-        $request->validate([
-            'customer_id' => "required",
-            'product_id' => "required",
-            'quantity' => "required",
-            'price_each' => "required",
-        ]);
+
         $user = Auth::user();
-        $product= Product::find($id);
         $cart= new Cart();
+        $id=$request->id;
+        $product= Product::find($id);
         
-        $cart->customer_id=$request->$user->id;
-        $cart->product_id=$request->$product->id;
-        $cart->price_each=$request->$product->product_price;
+        $cart->customer_id=$user->id;
+        $cart->product_id=$product->id;
+        $cart->price_each=$product->product_price;
         $cart->quantity=$request->quantity;
 
-        
-       
         $cart->save();
 
         return redirect()->route('shoppingCart.index')->with('success',"Produs adaugat cu succes");
+        
+    }
+
+    public function removeCart(Request $request)
+    {
+        $cart_id=$request->cart_id;
+        $cart= Cart::where('cart_id', '=', $cart_id);
+        $cart->delete();
+        return redirect()->route('shoppingCart.index');
     }
 }

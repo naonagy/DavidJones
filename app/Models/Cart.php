@@ -14,17 +14,16 @@ class Cart extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    protected $fillable=["quantity"];
+    protected $fillable=["product_id", "customer_id", "quantity", "price_each"];
+    
     public function user():BelongsTo
     {
         return $this->belongsTo(User::class, 'customer_id', 'id');
     }
 
 
-    public function product()
+    public function products()
     {
-        return $this->hasMany(Product::class, 'id', 'product_id');
-        return $this->hasMany(Product::class, 'product_price', 'product_price');
-
+        return $this->belongsToMany(Product::class);
     }
 }

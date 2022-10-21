@@ -55,7 +55,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource("shoppingCart", CartController::class);
 
-    Route::get('shoppingCart/addToCart/{id}', [CartController::class, 'addToCart'])->name('addToCart');
+    Route::post('shoppingCart', [CartController::class, 'addToCart'])->name('addToCart');
+    Route::post('removeCart', [CartController::class, 'removeCart'])->name('removeCart');
+
 });
 
 
