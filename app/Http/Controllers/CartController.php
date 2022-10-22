@@ -104,8 +104,13 @@ class CartController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        //
+        $user = Auth::user();
+        $cart= Cart::where('customer_id', '=', $user->id)->get();
+        $cart->delete();
+        return redirect()->route('master')->with('success',"Produs adaugat cu succes");
     }
+   
+
     public function addToCart(Request $request)
     {
 
@@ -148,7 +153,7 @@ class CartController extends Controller
         $cart= Cart::where('customer_id', '=', $user->id)->get();
 
         $order= new Order();
-        $totalprice=0;
+        $totalprice=18;
         foreach ($cart as $row)
         {
             $totalprice += $row->quantity*$row->price_each;
@@ -162,7 +167,7 @@ class CartController extends Controller
 
         $order->save();
 
-        $order= Order::where('customer_id', '=', $user->id)->get()->first();
+        $order= Order::where('customer_id', '=', $user->id)->latest()->first();
         $order_id= $order->order_id;
 
         foreach ($cart as $row)
@@ -173,11 +178,15 @@ class CartController extends Controller
             $orderline->product_id = $row->product_id;
             $orderline->quantity = $row->quantity;
             $orderline->price_each = $row->price_each;
-            $totalprice += $row->quantity*$row->price_each;
             $orderline->save();
 
         }
+        foreach ($cart as $row)
+        {
+            $row->delete();
 
-        return redirect()-> route('master')->with('success',"Comanda a fost adaugata cu succes");
+        }
+        return redirect()->route('master')->with('success',"Produs adaugat cu succes");
+
     }
 }

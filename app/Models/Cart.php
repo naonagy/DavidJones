@@ -15,6 +15,7 @@ class Cart extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     protected $fillable=["product_id", "customer_id", "quantity", "price_each"];
+    protected $primaryKey = 'cart_id';
     
     public function user():BelongsTo
     {

@@ -16,7 +16,7 @@
                 </thead>
                 <tbody>
                     @php $subtotal=0 @endphp
-                @foreach ($cart as $product)
+                @forelse ($cart as $product)
                     
                     <tr>
                         <td class="col-sm-8 col-md-6">
@@ -50,17 +50,16 @@
                         
                     </tr>
                     @php $subtotal += $product->price_each*$product->quantity @endphp
-                 @endforeach 
+                 @empty
+                    <h1>Nu aveti nimic in cos</h1>
+                 @endforelse
 
                  <form method='post' action="{{ route('checkout')}}">
 
-                    @csrf
-                
-                    <input type="hidden" value="{{ $product->cart_id }}" name="cart_id">
-                        
+                    @csrf                        
                     <tr>
                         <td> Adresa </td>
-                        <td colspan="2"> <input type="text" name="address" id="address">  </td>
+                        <td colspan="2"> <input type="text" name="address" class="form-control" required>  </td>
                         <td><h5>Subtotal</h5></td>
                         <td class="text-right"><h5><strong>
                             {{ $subtotal }} RON
@@ -68,13 +67,13 @@
                     </tr>
                     <tr>
                         <td> Localitate </td>
-                        <td colspan="2"> <input type="text" name="city" id="city">  </td>
+                        <td colspan="2"> <input type="text" name="city" class="form-control" required>  </td>
                         <td><h5>Estimated shipping</h5></td>
                         <td class="text-right"><h5><strong>{{ $deliverycost=18 }} RON</strong></h5></td>
                     </tr>
                     <tr>
                         <td> Tara </td>
-                        <td colspan="2"> <input type="text" name="country" id="country">  </td>
+                        <td colspan="2"> <input type="text" name="country" class="form-control" required>  </td>
                         <td><h3>Total</h3></td>
                         <td class="text-right"><h3><strong>
                         {{ $subtotal+$deliverycost }} RON   
@@ -91,7 +90,7 @@
                         </button></td>
                         <td>
                         <button type="submit" class="btn btn-success">
-                            <a href="{{ route('checkout') }}">Checkout</a>  
+                            Checkout
                             <span class="glyphicon glyphicon-play"></span>
                         </button></td>
                     </form>
