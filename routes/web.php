@@ -3,13 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ClproductController;
-
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
-
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CartController;
-use App\Models\Cart;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +33,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');})->name('dashboard');
     Route::resource("products", ProductController::class);
-    Route::resource("orders", OrderController::class);
+   Route::resource("orders", OrderController::class);
     Route::resource("customers", UserController::class);
 
 });
@@ -52,17 +48,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('produse/categorie/{category}', [ClproductController::class,'categorie'])
     ->whereIn('category', ['genti', 'rucsacuri', 'portofele'])
     ->name('category');
-
+    
     Route::resource("shoppingCart", CartController::class);
-
     Route::post('shoppingCart', [CartController::class, 'addToCart'])->name('addToCart');
     Route::post('removeCart', [CartController::class, 'removeCart'])->name('removeCart');
+    Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
 
 });
 
 
-
-//Route::resource("orders/{order}", OrderlineController::class);
 
 
 

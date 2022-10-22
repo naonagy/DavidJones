@@ -26,20 +26,20 @@
         @foreach ($orders as $row)
         <tr>
             <td>
-                <img src="{{asset('images/'.$row->id)}}" style="width:100px" />
-            </td>
-            <td>
                 {{$row->customer_id}}
             </td>
             <td>
                 {{$row->status}}
             </td>
             <td>
-                <form method="post" action="{{route('orders.destroy', $row->id)}}">
+                {{$row->total_price}}
+            </td>
+            <td>
+                <form method="post" action="{{route('orders.destroy', $row->order_id)}}">
                     @csrf
                     @method('DELETE')
-                    <a href="{{ route('orders.show',$row->id)}}" class="btn  btn-sm">Vezi detalii</a>
-                    <a href="{{ route('orders.edit',$row->id)}}" class="btn btn-primary btn-sm">Edit</a>
+                    <a href="{{ route('orders.show',$row->order_id)}}" class="btn  btn-sm">Vezi detalii</a>
+                    <a href="{{ route('orders.edit',$row->order_id)}}" class="btn btn-primary btn-sm">Edit</a>
                     <input type="submit" class="btn btn-danger btn-sm" value="Sterge" />
                 </form>
             </td>

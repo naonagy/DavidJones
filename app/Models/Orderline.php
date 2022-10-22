@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Orderline extends Model
 {
     use HasFactory;
-    protected $fillable=["product_id", "quantity", "price_each"];
-
+    protected $fillable=["order_id", "product_id", "quantity", "price_each"];
+    public $timestamps = false;
+    public function orders()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

@@ -109,12 +109,9 @@ class OrderlineController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        $order=Order::find($id);
-        $order->delete();
-        return redirect()-> route('orders.index')->with('success',"Comanda stearsa cu succes");
-   
+        
     }
 }
 

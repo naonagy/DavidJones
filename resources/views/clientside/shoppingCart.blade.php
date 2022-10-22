@@ -15,16 +15,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{ $subtotal=0 }}
+                    @php $subtotal=0 @endphp
                 @foreach ($cart as $product)
                     
                     <tr>
                         <td class="col-sm-8 col-md-6">
                         <div class="media">
-                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+                            <a class="thumbnail pull-left" href="#">           
+                                <img src="{{ asset('images/' .  $product->product_image) }}" width="100%" class="img-thumbnail" />
+                            </a>
                             <div class="media-body">
-                                <h4 class="media-heading"><a href="#">{{ $product->product_id }}</a></h4>
-                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                                <h4 class="media-heading"><a href="{{ route('produse.show',$product->product_id)}}">{{ $product->product_name }}</a></h4>
+                                <h5 class="media-heading"><a href="#">{{ $product->product_id }}</a></h5>
                                 <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
                             </div>
                         </div></td>
@@ -47,29 +49,32 @@
                         </form>
                         
                     </tr>
-                    {{ $subtotal += $product->price_each*$product->quantity }}
+                    @php $subtotal += $product->price_each*$product->quantity @endphp
                  @endforeach 
 
+                 <form method='post' action="{{ route('checkout')}}">
+
+                    @csrf
+                
+                    <input type="hidden" value="{{ $product->cart_id }}" name="cart_id">
+                        
                     <tr>
-                        <td>   </td>
-                        <td>   </td>
-                        <td>   </td>
+                        <td> Adresa </td>
+                        <td colspan="2"> <input type="text" name="address" id="address">  </td>
                         <td><h5>Subtotal</h5></td>
                         <td class="text-right"><h5><strong>
                             {{ $subtotal }} RON
                         </strong></h5></td>
                     </tr>
                     <tr>
-                        <td>   </td>
-                        <td>   </td>
-                        <td>   </td>
+                        <td> Localitate </td>
+                        <td colspan="2"> <input type="text" name="city" id="city">  </td>
                         <td><h5>Estimated shipping</h5></td>
                         <td class="text-right"><h5><strong>{{ $deliverycost=18 }} RON</strong></h5></td>
                     </tr>
                     <tr>
-                        <td>   </td>
-                        <td>   </td>
-                        <td>   </td>
+                        <td> Tara </td>
+                        <td colspan="2"> <input type="text" name="country" id="country">  </td>
                         <td><h3>Total</h3></td>
                         <td class="text-right"><h3><strong>
                         {{ $subtotal+$deliverycost }} RON   
@@ -85,9 +90,11 @@
                             <a href="{{ route('master') }}"> Continue Shopping</a>
                         </button></td>
                         <td>
-                        <button type="button" class="btn btn-success">
-                            Checkout <span class="glyphicon glyphicon-play"></span>
+                        <button type="submit" class="btn btn-success">
+                            <a href="{{ route('checkout') }}">Checkout</a>  
+                            <span class="glyphicon glyphicon-play"></span>
                         </button></td>
+                    </form>
                     </tr>
                 </tbody>
             </table>

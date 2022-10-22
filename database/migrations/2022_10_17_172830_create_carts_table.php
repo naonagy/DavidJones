@@ -25,12 +25,6 @@ return new class extends Migration
             $table->foreign('price_each')
             ->references('product_price')
             ->on('products');
-            $table->foreign('product_name')
-            ->references('product_name')
-            ->on('products');
-            $table->foreign('product_image')
-            ->references('product_image')
-            ->on('products');
             $table->timestamps();
         });
     }

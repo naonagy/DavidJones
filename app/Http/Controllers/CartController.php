@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\UpdateCartRequest;
 use Illuminate\Http\Request;
-
-use App\Models\User;
-
+use App\Models\Order;
+use App\Models\Orderline;
+use Faker\DefaultGenerator;
 
 class CartController extends Controller
 {
@@ -109,15 +109,24 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
 
+        
         $user = Auth::user();
         $cart= new Cart();
         $id=$request->id;
         $product= Product::find($id);
-        
+
         $cart->customer_id=$user->id;
         $cart->product_id=$product->id;
         $cart->price_each=$product->product_price;
         $cart->quantity=$request->quantity;
+        $cart->product_name=$product->product_name;
+
+        if(!empty($request->$product->product_image)){
+
+            $file_name=time().".".request()->product_image->getClientOriginalExtension();
+            request()->product_image->move(public_path('images'), $file_name);
+            $cart->product_image=$file_name;
+        }
 
         $cart->save();
 
@@ -131,5 +140,44 @@ class CartController extends Controller
         $cart= Cart::where('cart_id', '=', $cart_id);
         $cart->delete();
         return redirect()->route('shoppingCart.index');
+    }
+    public function checkout(Request $request)
+    {
+
+        $user = Auth::user();
+        $cart= Cart::where('customer_id', '=', $user->id)->get();
+
+        $order= new Order();
+        $totalprice=0;
+        foreach ($cart as $row)
+        {
+            $totalprice += $row->quantity*$row->price_each;
+        }
+        $order->customer_id=$user->id;
+        $order->status="Comanda noua";
+        $order->total_price=$totalprice;
+        $order->country=$request->country;
+        $order->city=$request->city;
+        $order->address=$request->address;
+
+        $order->save();
+
+        $order= Order::where('customer_id', '=', $user->id)->get()->first();
+        $order_id= $order->order_id;
+
+        foreach ($cart as $row)
+        {
+
+            $orderline = new Orderline();
+            $orderline->order_id = $order_id;
+            $orderline->product_id = $row->product_id;
+            $orderline->quantity = $row->quantity;
+            $orderline->price_each = $row->price_each;
+            $totalprice += $row->quantity*$row->price_each;
+            $orderline->save();
+
+        }
+
+        return redirect()-> route('master')->with('success',"Comanda a fost adaugata cu succes");
     }
 }

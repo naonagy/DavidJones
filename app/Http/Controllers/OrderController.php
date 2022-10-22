@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-use App\Models\Orderline;
-use App\Models\User;
-
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use Illuminate\Http\Request;
+
 
 class OrderController extends Controller
 {
@@ -29,8 +28,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-       // $orderline = Orderline::all();
-       // return view('workspace.orders.create')->with('orderline', $orderline);
+       return view('workspace.orders.create');
     }
 
     /**
@@ -41,20 +39,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        $request->validate([
-            'customer_id'=>"customer_id",
-            'status'=>"required",
-            'total_price' => "required",
-        ]);
-
-        $order= new Order();
-        $order->customer_id=$request->customer_id;
-        $order->orderline->id =$request->orderline->id;
-        $order->status=$request->status;
-        $order->total_price=$request->total_price;
-        $order->save();
-
-        return redirect()-> route('orders.index')->with('success',"Comanda a fost adaugata cu succes");
+        
     }
 
     /**
@@ -88,24 +73,7 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        $request->validate([
-            'customer_id'=>"customer_id",
-            'status'=>"required",
-            'total_price' => "required",
-        ]);
-
-
-
-        $order=Order::find($request->hidden_id);
-
-        $order->customer_id=$request->customer_id;
-        $order->status=$request->status;
-        $order->total_price=$request->total_price;
-
-        $order->save();
-
-        return redirect()-> route('products.index')->with('success',"Comanda modificata cu succes");
-  
+        //
     }
 
     /**
@@ -114,11 +82,12 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $order=Order::find($id);
+        $order_id=$request->order_id;
+        $order=order::where('order_id', '=', $order_id);
         $order->delete();
-        return redirect()-> route('orders.index')->with('success',"Comanda stearsa cu succes");
+        return redirect()-> route('orders.index')->with('success',"Produs sters cu succes");
    
     }
 }
