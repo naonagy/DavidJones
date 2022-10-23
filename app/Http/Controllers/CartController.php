@@ -126,12 +126,10 @@ class CartController extends Controller
         $cart->quantity=$request->quantity;
         $cart->product_name=$product->product_name;
 
-        if(!empty($request->$product->product_image)){
-
-            $file_name=time().".".request()->product_image->getClientOriginalExtension();
-            request()->product_image->move(public_path('images'), $file_name);
-            $cart->product_image=$file_name;
-        }
+           // $file_name=time().".".request()->$product->product_image->getClientOriginalExtension();
+            //request()->$product->product_image->move(public_path('images'), $file_name);
+           // $cart->product_image=$product->product_image->getFilename().'.'.$extension;
+        
 
         $cart->save();
 

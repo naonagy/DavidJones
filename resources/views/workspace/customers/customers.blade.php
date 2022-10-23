@@ -10,18 +10,18 @@
 
 <div class="container">
     <table>
-        <tr>
-            <th>Nume client</th>
-            <th>Adresa de email</th>
+        <tr style="margin-right: 100px">
+            <th style="text-align:start">Nume client</th>
+            <th style="text-align:end">Adresa de email</th>
 
         </tr>
         @if(count((array)$user)>0)
         @foreach ($user as $row)
         <tr>
-            <td>
+            <td style="text-align: start">
                 {{$row->name}}
             </td>
-            <td>
+            <td style="text-align: end">
                 {{$row->email}}
             </td>
             <td>

@@ -3,12 +3,17 @@
 @section('content')
 
 
-	<h2>{{ $user->id }}</h2>
 			
 	<a href="{{ route('customers.index') }}" class="btn btn-primary btn-sm float-end">Vezi toate</a>
 					
 	<div class="card-body">
 		
+		<div class="row mb-3">
+			<label class="col-sm-2 col-label-form"><b>ID client</b></label>
+			<div class="col-sm-10">
+				{{ $user->id }}
+			</div>
+		</div>
 		<div class="row mb-3">
 			<label class="col-sm-2 col-label-form"><b>Nume client</b></label>
 			<div class="col-sm-10">

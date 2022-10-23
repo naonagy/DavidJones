@@ -1,10 +1,10 @@
 @extends('dashboard')
 
 @section('content')
-<form method="post" action="{{route("orders.update", $order->id)}}" enctype="multipart/form-data">
+<form method="post" action="{{route("orders.update", $order->order_id)}}" enctype="multipart/form-data">
 @csrf
 @method('PUT')
-<input type="hidden" name="hidden_id" value="{{$order->id}}"/>
+<input type="hidden" name="hidden_id" value="{{$order->order_id}}"/>
     <div class="container">
 
         <div class="row">
@@ -14,7 +14,7 @@
             </div>
             
             <div class="col">
-            <input type="text" name="id" id="id" required value="{{$order->id}}">
+            <input type="text" name="id" id="id" required value="{{$order->order_id}}">
             </div>
 
 
@@ -27,7 +27,7 @@
             
             <div class="col">
             <textarea type="text" name="description" id="description" required>
-            {{$product->description}}
+            {{$order->status}}
             </textarea>
             </div>
 
@@ -36,11 +36,11 @@
         <div class="row">
         
             <div class="col">
-            <label for="product_category"> Categorie</label>
+            <label for="status"> Status</label>
             </div>
             
             <div class="col">
-            <select type="text" name="product_category" id="product_category" required>
+            <select type="text" name="status" id="status" required>
                 <option value="Genti">Genti</option>
                 <option value="Rucsacuri">Rucsacuri</option>
                 <option value="Portofele">Portofele</option>
@@ -65,15 +65,17 @@
 
             
         </div>
-        
+        @foreach ($orderline as $line)
+            
+        @endforeach
         <div class="row">
         
             <div class="col">
-            <label for="product_price"> Pret Produs</label>
+            <label for="product_id"> Pret Produs</label>
             </div>
             
             <div class="col">
-            <input type="number" name="product_price" id="product_price" required  value="{{$product->product_price}}"/>
+            <input type="number" name="product_id" id="product_id" required  value="{{$line->product_id}}"/>
             </div>
 
 
@@ -86,7 +88,7 @@
             </div>
             
             <div class="col">
-            <input type="number" name="quantity" id="quantity" required value="{{$product->quantity}}">
+            <input type="number" name="quantity" id="quantity" required value="{{$line->quantity}}">
             </div>
 
 
@@ -95,11 +97,11 @@
         <div class="row">
         
             <div class="col">
-            <label for="product_color"> Culoare Produs</label>
+            <label for="price_each"> Culoare Produs</label>
             </div>
             
             <div class="col">
-            <input type="text" name="product_color" id="product_color" required value="{{$product->product_color}}">
+            <input type="text" name="price_each" id="price_each"  value="{{$line->price_each}}" required>
             </div>
 
 
@@ -110,6 +112,6 @@
     </div>
 </form>
 <script>
-document.getElementsByName('product_category')[0].value = "{{ $product->product_category }}";
+document.getElementsByName('status')[0].value = "{{ $order->status }}";
 </script>
 @endsection('content')

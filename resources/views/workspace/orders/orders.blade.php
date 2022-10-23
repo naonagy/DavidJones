@@ -35,23 +35,17 @@
                 {{$row->total_price}}
             </td>
             <td>
-                <form method="post" action="{{route('orders.destroy', $row->order_id)}}">
+                @php
+                $order_id= $row->order_id
+                @endphp
+                <form method="post" action="{{route('orders.destroy', $order_id)}}">
                     @csrf
                     @method('DELETE')
-                    <a href="{{ route('orders.edit',$row->order_id)}}" class="btn btn-primary btn-sm">Edit</a>
-                    @php
-                        $order_id= $row->order_id
-                    @endphp
-                    <a href="{{ route('showOrder', $order_id)}}" class="btn btn-primary btn-sm">Vezi detalii</a>
+                    <a href="{{ route('orders.edit',$order_id)}}" class="btn btn-primary btn-sm">Edit</a>
+
+                    <a href="{{ route('orders.show', $order_id)}}" class="btn btn-primary btn-sm">Vezi detalii</a>
 
                     <input type="submit" class="btn btn-danger btn-sm" value="Sterge" />
-                    <input type="hidden" class="btn btn-danger btn-sm" value={{ $row->order_id }} name="order_id" />
-
-                </form>
-                <form method="post" action="{{route('showOrder', $row->order_id)}}">
-                    @csrf
-                    <input type="hidden" class="btn btn-danger btn-sm" value={{ $row->order_id }} name="order_id" />
-
                 </form>
             </td>
         </tr>

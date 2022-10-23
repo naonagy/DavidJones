@@ -34,8 +34,6 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
         return view('dashboard');})->name('dashboard');
     Route::resource("products", ProductController::class);
     Route::resource("orders", OrderController::class);
-    Route::get('orders/view/{order_id}', [OrderController::class, 'showOrder'])->name('showOrder');
-
     Route::resource("customers", UserController::class);
 
 });

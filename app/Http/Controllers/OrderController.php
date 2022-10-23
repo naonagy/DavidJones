@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
@@ -49,15 +50,11 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show($order_id)
     {
-       
-    }
-    public function showOrder($order_id)
-    {
-       $order = Order::findOrFail($order_id);
-       $orderline=Orderline::where('order_id', '=', $order_id)->get();
-        return view('workspace.orders.show', compact('order', 'orderline'));
+        $order = Order::findOrFail($order_id);
+        $orderline=Orderline::where('order_id', '=', $order_id)->get();
+         return view('workspace.orders.show', compact('order', 'orderline'));
     }
 
     /**
@@ -66,9 +63,11 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit($order_id)
     {
-        return view('workspace.orders.edit',compact('order'));
+        $order = Order::findOrFail($order_id);
+        $orderline=Orderline::where('order_id', '=', $order_id)->get();
+         return view('workspace.orders.show', compact('order', 'orderline'));
     }
 
     /**
@@ -78,9 +77,30 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update(UpdateOrderRequest $request, $order_id)
     {
-        //
+        $order= Order::find($request->hidden_id);
+
+        $order->status=$request->status;
+        $order->country=$request->country;
+        $order->city=$request->city;
+        $order->address=$request->address;
+
+        $order->save();
+
+        $orderline= Orderline::where('order_id', '=', $order->order_id)->get();
+
+        foreach ($orderline as $row)
+        {
+
+            $orderline->product_id = $row->product_id;
+            $orderline->quantity = $row->quantity;
+            $orderline->price_each = $row->price_each;
+            $orderline->save();
+
+        }
+
+        return redirect()->route('order.index')->with('success',"Produs adaugat cu succes");
     }
 
     /**
@@ -89,11 +109,14 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($order_id)
     {
-        $order_id=$request->order_id;
-        $order=order::where('order_id', '=', $order_id);
+        $order=order::findOrFail($order_id);
+        $orderline= Orderline::where('order_id', '=', $order_id)->get();
+        $orderline->each->delete();
+        
         $order->delete();
+
         return redirect()-> route('orders.index')->with('success',"Produs sters cu succes");
    
     }

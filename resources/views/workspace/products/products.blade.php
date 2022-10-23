@@ -19,11 +19,7 @@
         <tr>
             <th>Imagine</th>
             <th>Nume Produs</th>
-            <th>Categorie</th>
-            <th>Pret</th>
             <th>Cantitate</th>
-            <th>Culoare</th>
-            <th>Descriere</th>
         </tr>
         @if(count((array)$data)>0)
         @foreach ($data as $row)
@@ -31,10 +27,10 @@
             <td>
                 <img src="{{asset('images/'.$row->product_image)}}" style="width:100px" />
             </td>
-            <td>
+            <td style="text-align: center">
                 {{$row->product_name}}
             </td>
-            <td>
+            <td style="text-align: center">
                 {{$row->quantity}}
             </td>
             <td>
