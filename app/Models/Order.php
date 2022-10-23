@@ -11,6 +11,7 @@ class Order extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $primaryKey = 'order_id';
     protected $fillable=["customer_id", "status", "total_price", "country", "city", "address"];
     public function user():BelongsTo
     {

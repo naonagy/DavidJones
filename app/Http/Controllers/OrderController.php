@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\Orderline;
 use Illuminate\Http\Request;
 
 
@@ -48,9 +49,15 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show(Request $request)
     {
-        return view('workspace.orders.show', compact("order"));
+       
+    }
+    public function showOrder($order_id)
+    {
+       $order = Order::findOrFail($order_id);
+       $orderline=Orderline::where('order_id', '=', $order_id)->get();
+        return view('workspace.orders.show', compact('order', 'orderline'));
     }
 
     /**
