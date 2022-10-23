@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Order;
+
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 
@@ -48,7 +50,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return view('workspace.customers.show',  ['user'=> User::findOrFail($id)]);
+        $user=User::findOrFail($id);
+        $order=Order::where('customer_id', '=', $id)->get();
+        return view('workspace.customers.show', compact('user', 'order'));
     }
 
     /**

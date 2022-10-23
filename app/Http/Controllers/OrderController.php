@@ -67,7 +67,7 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($order_id);
         $orderline=Orderline::where('order_id', '=', $order_id)->get();
-         return view('workspace.orders.show', compact('order', 'orderline'));
+         return view('workspace.orders.edit', compact('order', 'orderline'));
     }
 
     /**
@@ -96,11 +96,11 @@ class OrderController extends Controller
             $orderline->product_id = $row->product_id;
             $orderline->quantity = $row->quantity;
             $orderline->price_each = $row->price_each;
-            $orderline->save();
+            $orderline->each->save();
 
         }
 
-        return redirect()->route('order.index')->with('success',"Produs adaugat cu succes");
+        return redirect()->route('orders.index')->with('success',"Produs adaugat cu succes");
     }
 
     /**

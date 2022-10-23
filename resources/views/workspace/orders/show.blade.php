@@ -8,13 +8,13 @@
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
 			<div class="row mb-3">
-				<label class="col-sm-2 col-label-form"><b>ID Comanda</b></label>
+				<label class="col-sm-2 col-label-form"><b>ID Client</b></label>
 				<div class="col-sm-10" style="text-align: center">
 					<a href="{{ route('customers.show', $order->customer_id) }}">
 						{{ 	$order->customer_id	}}
 					</a>
 				</div>
-				<label class="col-sm-2 col-label-form"><b>ID Client</b></label>
+				<label class="col-sm-2 col-label-form"><b>ID Comanda</b></label>
 				<div class="col-sm-10" style="text-align: center">
 					{{ 	$order->order_id	}}
 				</div>

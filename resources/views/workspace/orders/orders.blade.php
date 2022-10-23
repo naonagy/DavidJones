@@ -41,9 +41,9 @@
                 <form method="post" action="{{route('orders.destroy', $order_id)}}">
                     @csrf
                     @method('DELETE')
-                    <a href="{{ route('orders.edit',$order_id)}}" class="btn btn-primary btn-sm">Edit</a>
 
                     <a href="{{ route('orders.show', $order_id)}}" class="btn btn-primary btn-sm">Vezi detalii</a>
+                    <a href="{{ route('orders.edit',$order_id)}}" class="btn btn-primary btn-sm">Edit</a>
 
                     <input type="submit" class="btn btn-danger btn-sm" value="Sterge" />
                 </form>

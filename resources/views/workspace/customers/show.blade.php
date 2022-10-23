@@ -34,6 +34,22 @@
 		</div>
 		
 	</div>
+	@forelse ($order as $row)
+	<div class="row mb-4">
+		<div class="col-sm-10">
+			<label class="col-sm-2 col-label-form">
+				<b>
+				Id Comanda:
+				</b>
+			</label>
+			<a href="{{ route('orders.show', $row->order_id ) }}">
+				{{ $row->order_id }}
+			</a>
+		</div>
+	</div>
+	@empty
+		<div>Clientul nu are comenzi inca</div>
+	@endforelse
 
 
 @endsection('content')
