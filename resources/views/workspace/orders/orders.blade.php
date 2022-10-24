@@ -18,7 +18,6 @@
     <table>
         <tr>
             <th>ID client</th>
-            <th>Nume Client</th>
             <th>Status Comanda</th>
             <th>Pret total</th>
         </tr>

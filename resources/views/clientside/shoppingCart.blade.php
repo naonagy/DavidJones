@@ -21,9 +21,7 @@
                     <tr>
                         <td class="col-sm-8 col-md-6">
                         <div class="media">
-                            <a class="thumbnail pull-left" href="#">           
-                                <img src="{{ asset('images/' .  $product->product_image) }}" width="100%" class="img-thumbnail" />
-                            </a>
+
                             <div class="media-body">
                                 <h4 class="media-heading"><a href="{{ route('produse.show',$product->product_id)}}">{{ $product->product_name }}</a></h4>
                                 <h5 class="media-heading"><a href="#">{{ $product->product_id }}</a></h5>
