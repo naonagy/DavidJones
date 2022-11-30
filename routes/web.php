@@ -6,6 +6,8 @@ use App\Http\Controllers\ClproductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\DiscountController;
+use App\Models\Discount;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,14 +37,15 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::resource("products", ProductController::class);
     Route::resource("orders", OrderController::class);
     Route::resource("customers", UserController::class);
-
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
     
-    Route::get('/', function () {
-        return view('index');
-    })->name('master');
+
+    Route::get('/', [DiscountController::class, 'index'])->name('master');
+    Route::get('/test', function () {
+        return view('test');
+    })->name('test');
 
     Route::resource("produse", ClproductController::class);
     Route::get('produse/categorie/{category}', [ClproductController::class,'categorie'])

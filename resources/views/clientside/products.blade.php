@@ -9,9 +9,6 @@
 
 <div class="album py-5 bg-light">
     <div class="container d-flex flex-wrap justify-content-center">
-       
-
-
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 w-75">
         @if(count((array) $data )>0)
        
@@ -39,8 +36,8 @@
                 <small class="text-muted">{{ $row->product_price }} RON</small>
               </div>
             </div>
+          </div>
         </div>
-    </div>
 
       @endforeach
       @else
@@ -50,8 +47,11 @@
           </td>
       </tr>
       @endif
-      {!! $data->links() !!}
-    </div>
+ 
+        <p>{!! $data->links() !!}</p>
+    
+      </div>
+      
   </div>
 </div>
 
