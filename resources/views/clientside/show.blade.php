@@ -80,17 +80,24 @@ $categorie = strtolower($categorie);
             <span class="fw-normal">{{$product->id}}</span>
           </p>
         </div>
-        <form method='post' action="{{ route('addToCart')}}">
-          <div class="d-flex flex-row pt-2">
+        @if ($product->quantity==0)
+          <div class="pt-1 pb-3">
+            <p class="fw-semibold text-danger">
+              Produs indipsonibil momentan
+            </p>
+          </div>
+          @else
+            <form method='post' action="{{ route('addToCart')}}">
+              <div class="d-flex flex-row pt-2">
 
-          @csrf
+              @csrf
 
-          <input type="number" value="1" min="1" max="{{ $product->quantity }}" class="form-control border border-0 rounded" style="width: 10%;" name="quantity">
-          <button type="submit" class="btn green-button btn-md px-4 mx-3">Adauga in cos</button>
-          <input type="hidden" value="{{ $product->id }}" name="id">
-        </div>
-        </form>
-
+              <input type="number" value="1" min="1" max="{{ $product->quantity }}" class="form-control border border-0 rounded" style="width: 10%;" name="quantity">
+              <button type="submit" class="btn green-button btn-md px-4 mx-3">Adauga in cos</button>
+              <input type="hidden" value="{{ $product->id }}" name="id">
+            </div>
+            </form>
+        @endif
       </div>
       <div class="pt-3">
         <h2 class="separator display-6 text-center pb-5 fw-bold"></h2>
