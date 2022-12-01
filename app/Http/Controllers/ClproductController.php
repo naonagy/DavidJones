@@ -84,7 +84,9 @@ class ClproductController extends Controller
      */
     public function show($id)
     {
-        return view('clientside.show', ['product'=> Product::findOrFail($id)]);
+        
+        $discounts = Discount::where('product_id', '=', $id)->get();
+        return view('clientside.show', ['product'=> Product::findOrFail($id)],compact('discounts'));
         //return 'test';
     }
 

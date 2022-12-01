@@ -9,7 +9,12 @@
 
 $categorie=$product->product_category;
 $categorie = strtolower($categorie);
-    
+    foreach ($discounts as $discount) {
+      if ($product->id==$discount->product_id) {
+        $new_price=$discount->new_price;
+        break;
+      }
+    }
 @endphp
 
 <div class="pt-2">
@@ -45,8 +50,14 @@ $categorie = strtolower($categorie);
             </h2>
         </div>
         <div class="d-flex flex-row py-2">
-          <div class="text-decoration-line-through px-1">{{$product->product_price}} RON </div>
-          <div class="fw-semibold text-danger px-1">{{$product->product_price}} RON </div>
+
+          @if(isset($new_price))
+            <div class="text-decoration-line-through px-1">{{$product->product_price}} RON </div>
+            <div class="fw-semibold text-danger px-1">{{$new_price}} RON </div>
+          @else
+            <div class="fw-semibold text-danger px-1">{{$product->product_price}} RON </div> 
+          @endif
+          
         </div>
         <div class="py-1">
           {{$product->description}}
