@@ -2,65 +2,91 @@
 @section('content')
 
 <div class="container">
-<a href="{{ route('produse.index') }}" class="btn btn-primary btn-sm float-end">Vezi toate</a>
-	
+
+<!-- Breadcrumb- categorie de produse -->
+
+@php
+
+$categorie=$product->product_category;
+$categorie = strtolower($categorie);
+    
+@endphp
+
+<div class="pt-2">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{{ route('category', ['category' =>  $categorie])}}">
+          {{ $product->product_category }}
+        </a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        {{ $product->product_name }}
+      </li>
+    </ol>
+  </nav>
+</div>
+
 <div class="container-fluid">
   <div class="row">
-    <div class="col-6">
+    <div class="col-lg-6 col-md-6 col-sm-12 p-4">
       <div class="container">
         <div class="row">
-          <img src="{{ asset('images/' .  $product->product_image) }}" width="100%" class="img-thumbnail" />
-
+          <img src="{{ asset('images/' .  $product->product_image) }}" width="75%" class="img-thumbnail" />
         </div>
       </div>
     </div>
-    <div class="col-6">
-      <div class="container pt-5">
-        <div class="row pt-5">
-            <h1 class="pt-5 fs-2s">{{$product->product_name}}</h1>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="container pt-2">
+        <div class="row pt-5 d-flex pb-3">
+            <h1 class="fs-2 pb-2 fs-4">{{$product->product_name}}</h1>
+            <h2  class="brand fs-5" >
+              David Jones
+            </h2>
         </div>
-        <div>
-          {{$product->product_price}} RON
+        <div class="d-flex flex-row py-2">
+          <div class="text-decoration-line-through px-1">{{$product->product_price}} RON </div>
+          <div class="fw-semibold text-danger px-1">{{$product->product_price}} RON </div>
         </div>
-        <div>
+        <div class="py-1">
           {{$product->description}}
         </div>
-        <div>
-          {{$product->product_color}}
+        <div class="py-1">
+          <p class="fw-semibold">
+            Culoare: 
+            <span class="fw-normal">{{$product->product_color}}</span>
+          </p>
         </div>
-        <div>
-          {{$product->quantity}}
+        <div class="py-1">
+          <p class="fw-semibold">
+            Cost transport: 
+            <span class="fw-normal">18 RON</span>
+          </p>
         </div>
-        <div>
-          Cost transport: 18 RON
+        <div class="pt-1 pb-3">
+          <p class="fw-semibold">
+            Cod produs: 
+            <span class="fw-normal">{{$product->id}}</span>
+          </p>
         </div>
-        <div>
-          {{$product->quantity}}
-
         <form method='post' action="{{ route('addToCart')}}">
+          <div class="d-flex flex-row pt-2">
 
           @csrf
 
-          <input type="number" value="1" min="1" max="{{ $product->quantity }}" class="form-control" style="width: 100px" name="quantity">
-          
-          <br>
-          <button type="submit" class="btn btn-primary btn-sm">Adauga in cos</button>
+          <input type="number" value="1" min="1" max="{{ $product->quantity }}" class="form-control border border-0 rounded" style="width: 10%;" name="quantity">
+          <button type="submit" class="btn green-button btn-md px-4 mx-3">Adauga in cos</button>
           <input type="hidden" value="{{ $product->id }}" name="id">
-            
+        </div>
         </form>
 
-        </div>
-        <div>
-          {{$product->id}}
-        </div>
-
       </div>
-      <div class="pt-5">
+      <div class="pt-3">
         <h2 class="separator display-6 text-center pb-5 fw-bold"></h2>
       </div>
       <div>
-        <Button>Adauga la favorite</Button>
-        <Button>Cere informatii</Button>
+        <Button> <span><i class="bi bi-heart"></i></span> Adauga la favorite</Button>
+        <Button> <span><i class="bi bi-info"></i></span> Cere informatii</Button>
       </div>
     </div>
   </div>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\Discount;
+
 //use Illuminate\Support\Facades\DB;
 
 class ClproductController extends Controller
@@ -127,6 +129,12 @@ class ClproductController extends Controller
     {
         $data= Product::where('product_category','=', $category)->paginate(9);
         return view('clientside.products',compact('data'))->with('i',(request()->input('page',1)-1*9));
+    }
+    public function discount()
+    {
+        $produse = Product::all();
+        $discounts = Discount::orderBy('new_price')->get();
+        return view('index',compact('produse','discounts'));
     }
     
     

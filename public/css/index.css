@@ -105,3 +105,8 @@ footer h5{
 .section-with-carousel .carousel-controls .carousel-control:hover {
   opacity: 1;
 }
+.brand{
+    font-family: 'Fredoka One', cursive;
+    font-family: 'Lobster', cursive;
+    color: #98b921;
+}
