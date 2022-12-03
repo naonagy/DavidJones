@@ -1,103 +1,148 @@
 @extends('layouts.master')
 @section('content')
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-10 col-md-offset-1">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Cantitate</th>
-                        <th class="text-center">Pret</th>
-                        <th class="text-center">Total</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php $subtotal=0 @endphp
-                @forelse ($cart as $product)
-                    
-                    <tr>
-                        <td class="col-sm-8 col-md-6">
-                        <div class="media">
 
-                            <div class="media-body">
-                                <h4 class="media-heading"><a href="{{ route('produse.show',$product->product_id)}}">{{ $product->product_name }}</a></h4>
-                                <h5 class="media-heading"><a href="#">{{ $product->product_id }}</a></h5>
-                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
-                            </div>
-                        </div></td>
-                        <td class="col-sm-1 col-md-1" style="text-align: center">
-                        {{ $product->quantity }}
-                        </td>
-                        <td class="col-sm-1 col-md-1 text-center"><strong>{{ $product->price_each }} RON</strong></td>
-                        <td class="col-sm-1 col-md-1 text-center"><strong>{{ $product->price_each*$product->quantity }} RON</strong></td>
-                        <td class="col-sm-1 col-md-1">
-                        <form method='post' action="{{ route('removeCart')}}">
+<section class="h-100 h-custom" style="background-color: #eee;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col">
+          <div class="card">
+            <div class="card-body p-4">
+  
+              <div class="row">
+                <div class="col-lg-7 ">
+                    <div class="d-flex flex-row align-items-center justify-content-between mb-3">
+                    @php
+                        $cartnumber= count($cart);
+                    @endphp
+                        <p class="mb-0">Ai {{ $cartnumber }} produse in cos</p>
+                        <button class="btn"><a href="{{ route('master') }}" class="text-body"><i
+                            class="fas fa-long-arrow-alt-left me-2"></i>Continua cumparaturile</a></button>
+                    </div>
+                  <hr>
 
-                            @csrf
-                            
-                            <br>
-                            <button type="submit" class="btn btn-danger">
-                                <span class="glyphicon glyphicon-remove"></span> Remove
-                            </button></td>
-                            <input type="hidden" value="{{ $product->cart_id }}" name="cart_id">
+                 @php $subtotal=0 @endphp
+                 @forelse ($cart as $product)
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-row align-items-center">
+                          <div>
+                            <img
+                              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
+                              class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+                          </div>
+                          <div class="ms-3">
+                            <h5 class="media-heading">
+                                <a href="{{ route('produse.show',$product->product_id)}}">
+                                    {{ $product->product_name }}
+                                </a>
+                            </h5>
+                            <p class="small mb-0 fs-bold">Cod produs: {{ $product->product_id }}</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center flex-wrap">
+                          <div style="width: 50px;">
+                            <h5 class="fw-normal mb-0">{{ $product->quantity }}</h5>
+                          </div>
+                          <div style="width: 80px;">
+                            <h5 class="mb-0">{{ $product->price_each*$product->quantity }} RON</h5>
+                          </div>
+                          <div>
+                            <form method='post' action="{{ route('removeCart')}}">
+
+                                @csrf
                                 
-                        </form>
-                        
-                    </tr>
-                    @php $subtotal += $product->price_each*$product->quantity @endphp
-                 @empty
-                    <h1>Nu aveti nimic in cos</h1>
-                 @endforelse
+                                <br>
 
-                 <form method='post' action="{{ route('checkout')}}">
+                                <button type="submit" class="btn btn-outline-secondary">
+                                    <span class="glyphicon glyphicon-remove"></span> Sterge
+                                </button>
+                                <input type="hidden" value="{{ $product->cart_id }}" name="cart_id">
+                                    
+                            </form>
+                          </div>
+                          <a href="#!" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                @php $subtotal += $product->price_each*$product->quantity @endphp
+                @empty
+                   <h1>Nu aveti nimic in cos</h1>
+                @endforelse
+            </div>
 
-                    @csrf                        
-                    <tr>
-                        <td> Adresa </td>
-                        <td colspan="2"> <input type="text" name="address" class="form-control" required>  </td>
-                        <td><h5>Subtotal</h5></td>
-                        <td class="text-right"><h5><strong>
-                            {{ $subtotal }} RON
-                        </strong></h5></td>
-                    </tr>
-                    <tr>
-                        <td> Localitate </td>
-                        <td colspan="2"> <input type="text" name="city" class="form-control" required>  </td>
-                        <td><h5>Estimated shipping</h5></td>
-                        <td class="text-right"><h5><strong>{{ $deliverycost=18 }} RON</strong></h5></td>
-                    </tr>
-                    <tr>
-                        <td> Tara </td>
-                        <td colspan="2"> <input type="text" name="country" class="form-control" required>  </td>
-                        <td><h3>Total</h3></td>
-                        <td class="text-right"><h3><strong>
-                        {{ $subtotal+$deliverycost }} RON   
-                        </strong></h3></td>
-                    </tr>
-                    <tr>
-                        <td>   </td>
-                        <td>   </td>
-                        <td>   </td>
-                        <td>
-                        <button type="button" class="btn btn-default">
-                            <span class="glyphicon glyphicon-shopping-cart"></span>
-                            <a href="{{ route('master') }}"> Continue Shopping</a>
-                        </button></td>
-                        <td>
-                        <button type="submit" class="btn btn-success">
-                            Checkout
-                            <span class="glyphicon glyphicon-play"></span>
-                        </button></td>
+                <div class="col-lg-5">
+  
+                  <div class="card rounded-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="mb-0 text-center fw-semibold">Date de livrare</h5>
+                      </div>
+                      <form class="mt-4" method='post' action="{{ route('checkout')}}">
+
+                        @csrf
+                        <div class="form-outline form-white mb-4 ">
+                          <input class="rounded-1 w-100" type="text" name="adress" class="form-control form-control-lg" siez="17"
+                            placeholder="Adresa de livrare" required/>
+                        </div>
+  
+                        <div class="form-outline form-white mb-4">
+                          <input class="rounded-1 w-100" type="text" name="city" class="form-control form-control-lg" siez="17"
+                            placeholder="Oras" minlength="19" required/>
+                        </div>
+
+                        <div class="form-outline form-white mb-4">
+                            <input class="rounded-1 w-100" type="text" name="country" class="form-control form-control-lg" siez="17"
+                              placeholder="Tara" required/>
+                          </div>
+
+                        <div class="row mb-4">
+                          <div class="col-md-6">
+                            
+                          </div>
+                          <div class="col-md-6">
+                            
+                          </div>
+                        </div>
+  
+  
+                      <hr class="my-4">
+  
+                      <div class="d-flex justify-content-between">
+                        <p class="mb-2 fw-semibold">Subtotal</p>
+                        <p class="mb-2">{{ $subtotal }} RON</p>
+                      </div>
+  
+                      <div class="d-flex justify-content-between">
+                        <p class="mb-2 fw-semibold">Taxa de livrare</p>
+                        <p class="mb-2">{{ $deliverycost=18 }} RON</p>
+                      </div>
+  
+                      <div class="d-flex justify-content-between mb-4">
+                        <p class="mb-2 fw-semibold">Total</p>
+                        <p class="mb-2">{{ $subtotal+$deliverycost }} RON</p>
+                      </div>
+  
+                      <button type="submit" class="btn green-button btn-lg">
+                          <span class="glyphicon glyphicon-play"></span>Checkout
+                      </button>
                     </form>
-                    </tr>
-                </tbody>
-            </table>
+  
+                    </div>
+                  </div>
+  
+                </div>
+  
+              </div>
+  
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </section>
 
 
 @endsection('content')

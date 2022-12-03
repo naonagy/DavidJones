@@ -18,9 +18,9 @@ class ClproductController extends Controller
      */
     public function index()
     {
-        
+        $discounts = Discount::all();
         $data=Product::latest()->paginate(9);
-        return view('clientside.products',compact('data'))->with('i',(request()->input('page',1)-1*9));
+        return view('clientside.products', compact('discounts', 'data'))->with('i',(request()->input('page',1)-1*9));
     }
 
     /**
@@ -129,8 +129,9 @@ class ClproductController extends Controller
     }
     public function categorie($category)
     {
+        $discounts = Discount::all();
         $data= Product::where('product_category','=', $category)->paginate(9);
-        return view('clientside.products',compact('data'))->with('i',(request()->input('page',1)-1*9));
+        return view('clientside.products',compact('discounts', 'data'))->with('i',(request()->input('page',1)-1*9));
     }
     public function discount()
     {
