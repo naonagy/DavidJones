@@ -29,8 +29,8 @@ class CartController extends Controller
     {
         $user = Auth::user();
         $cart = Cart::whereBelongsTo($user)->get();
-
-        return view('clientside.shoppingCart', compact('cart'));
+        $products= Product::all();
+        return view('clientside.shoppingCart', compact('cart','products'));
 
     }
 

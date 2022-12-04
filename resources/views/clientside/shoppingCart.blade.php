@@ -23,17 +23,20 @@
 
                  @php $subtotal=0 @endphp
                  @forelse ($cart as $product)
+                 @foreach ($products as $data)
+                    @if ($product->product_id==$data->id)
+                        
                   <div class="card mb-3">
                     <div class="card-body">
                       <div class="d-flex justify-content-between">
                         <div class="d-flex flex-row align-items-center">
                           <div>
                             <img
-                              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                              class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+                                src="{{asset('images/'.$data->product_image)}}"
+                                class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
                           </div>
                           <div class="ms-3">
-                            <h5 class="media-heading">
+                            <h5 class="media-heading fs-5">
                                 <a href="{{ route('produse.show',$product->product_id)}}">
                                     {{ $product->product_name }}
                                 </a>
@@ -67,6 +70,8 @@
                       </div>
                     </div>
                   </div>
+                  @endif
+                 @endforeach
                 @php $subtotal += $product->price_each*$product->quantity @endphp
                 @empty
                    <h1>Nu aveti nimic in cos</h1>
