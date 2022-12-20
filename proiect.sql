@@ -12,19 +12,121 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Dumping data for table proiect.carts: ~0 rows (approximately)
+
+-- Dumping database structure for proiect
+CREATE DATABASE IF NOT EXISTS `proiect` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `proiect`;
+
+-- Dumping structure for table proiect.carts
+CREATE TABLE IF NOT EXISTS `carts` (
+  `cart_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `customer_id` bigint(20) unsigned NOT NULL,
+  `product_id` bigint(20) unsigned NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price_each` decimal(8,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`cart_id`) USING BTREE,
+  KEY `customer_id` (`customer_id`),
+  KEY `product_id` (`product_id`),
+  KEY `price_each` (`price_each`),
+  KEY `product_name` (`product_name`),
+  KEY `product_image` (`product_image`),
+  CONSTRAINT `FK_carts_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  CONSTRAINT `FK_carts_products_2` FOREIGN KEY (`price_each`) REFERENCES `products` (`product_price`),
+  CONSTRAINT `FK_carts_users` FOREIGN KEY (`customer_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table proiect.carts: ~7 rows (approximately)
 /*!40000 ALTER TABLE `carts` DISABLE KEYS */;
+INSERT INTO `carts` (`cart_id`, `customer_id`, `product_id`, `quantity`, `price_each`, `created_at`, `updated_at`, `product_name`, `product_image`) VALUES
+	(4, 1, 22, 2, 159.00, '2022-12-01 12:45:51', '2022-12-01 12:45:51', 'Geanta Melania', NULL),
+	(6, 1, 25, 1, 145.00, '2022-12-01 14:57:54', '2022-12-01 14:57:54', 'Geanta Ana', NULL),
+	(7, 1, 28, 1, 159.00, '2022-12-01 14:59:21', '2022-12-01 14:59:21', 'Geanta Clara', NULL),
+	(8, 1, 33, 1, 169.00, '2022-12-01 14:59:45', '2022-12-01 14:59:45', 'Geanta Antonia', NULL),
+	(9, 1, 23, 1, 169.00, '2022-12-01 15:03:23', '2022-12-01 15:03:23', 'Geanta Nola', NULL),
+	(10, 1, 36, 2, 159.00, '2022-12-01 15:07:01', '2022-12-01 15:07:01', 'Geanta Elissa', NULL),
+	(11, 1, 28, 1, 159.00, '2022-12-01 15:46:31', '2022-12-01 15:46:31', 'Geanta Clara', NULL);
 /*!40000 ALTER TABLE `carts` ENABLE KEYS */;
+
+-- Dumping structure for table proiect.discounts
+CREATE TABLE IF NOT EXISTS `discounts` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `product_price` decimal(8,2) NOT NULL,
+  `new_price` decimal(8,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `product_id` (`product_id`),
+  KEY `product_price` (`product_price`),
+  CONSTRAINT `FK_discounts_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  CONSTRAINT `FK_discounts_products_2` FOREIGN KEY (`product_price`) REFERENCES `products` (`product_price`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table proiect.discounts: ~9 rows (approximately)
+/*!40000 ALTER TABLE `discounts` DISABLE KEYS */;
+INSERT INTO `discounts` (`id`, `product_id`, `product_price`, `new_price`, `created_at`, `updated_at`) VALUES
+	(1, 43, 179.00, 159.00, NULL, NULL),
+	(2, 30, 149.00, 139.00, NULL, NULL),
+	(3, 50, 159.00, 129.00, NULL, NULL),
+	(4, 25, 145.00, 129.00, NULL, NULL),
+	(5, 49, 169.00, 155.00, NULL, NULL),
+	(6, 33, 169.00, 160.00, NULL, NULL),
+	(7, 28, 159.00, 120.00, NULL, NULL),
+	(8, 27, 139.00, 100.00, NULL, NULL),
+	(9, 36, 159.00, 140.00, NULL, NULL);
+/*!40000 ALTER TABLE `discounts` ENABLE KEYS */;
+
+-- Dumping structure for table proiect.failed_jobs
+CREATE TABLE IF NOT EXISTS `failed_jobs` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table proiect.failed_jobs: ~0 rows (approximately)
 /*!40000 ALTER TABLE `failed_jobs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `failed_jobs` ENABLE KEYS */;
 
+-- Dumping structure for table proiect.favorites
+CREATE TABLE IF NOT EXISTS `favorites` (
+  `favorite_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `customer_id` bigint(20) unsigned NOT NULL,
+  `product_id` bigint(20) unsigned NOT NULL,
+  `price_each` decimal(8,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`favorite_id`) USING BTREE,
+  KEY `customer_id` (`customer_id`),
+  KEY `product_id` (`product_id`),
+  KEY `price_each` (`price_each`),
+  CONSTRAINT `FK_favorites_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  CONSTRAINT `FK_favorites_products_2` FOREIGN KEY (`price_each`) REFERENCES `products` (`product_price`),
+  CONSTRAINT `FK_favorites_users` FOREIGN KEY (`customer_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Dumping data for table proiect.favorites: ~0 rows (approximately)
 /*!40000 ALTER TABLE `favorites` DISABLE KEYS */;
 /*!40000 ALTER TABLE `favorites` ENABLE KEYS */;
 
--- Dumping data for table proiect.migrations: ~11 rows (approximately)
+-- Dumping structure for table proiect.migrations
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table proiect.migrations: ~12 rows (approximately)
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(1, '2014_10_12_000000_create_users_table', 1),
@@ -37,10 +139,27 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(8, '2022_10_14_194001_create_orderlines_table', 1),
 	(9, '2022_10_16_154710_create_favorites_table', 1),
 	(10, '2022_10_17_172830_create_carts_table', 1),
-	(11, '2022_10_19_201155_add_is_admin_to_users_table', 1);
+	(11, '2022_10_19_201155_add_is_admin_to_users_table', 1),
+	(12, '2022_11_26_225655_create_discounts_table', 2);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
--- Dumping data for table proiect.orderlines: ~72 rows (approximately)
+-- Dumping structure for table proiect.orderlines
+CREATE TABLE IF NOT EXISTS `orderlines` (
+  `orderline_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `product_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `quantity` int(11) NOT NULL,
+  `price_each` decimal(8,2) NOT NULL,
+  PRIMARY KEY (`orderline_id`) USING BTREE,
+  KEY `order_id` (`order_id`),
+  KEY `product_id` (`product_id`),
+  KEY `price_each` (`price_each`),
+  CONSTRAINT `FK_orderlines_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
+  CONSTRAINT `FK_orderlines_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  CONSTRAINT `FK_orderlines_products_2` FOREIGN KEY (`price_each`) REFERENCES `products` (`product_price`)
+) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table proiect.orderlines: ~75 rows (approximately)
 /*!40000 ALTER TABLE `orderlines` DISABLE KEYS */;
 INSERT INTO `orderlines` (`orderline_id`, `order_id`, `product_id`, `quantity`, `price_each`) VALUES
 	(1, 1, 29, 1, 139.00),
@@ -115,10 +234,28 @@ INSERT INTO `orderlines` (`orderline_id`, `order_id`, `product_id`, `quantity`, 
 	(139, 61, 58, 1, 189.00),
 	(140, 61, 69, 2, 199.00),
 	(141, 62, 54, 1, 159.00),
-	(142, 62, 23, 1, 169.00);
+	(142, 62, 23, 1, 169.00),
+	(143, 63, 32, 1, 159.00),
+	(144, 64, 37, 3, 169.00);
 /*!40000 ALTER TABLE `orderlines` ENABLE KEYS */;
 
--- Dumping data for table proiect.orders: ~21 rows (approximately)
+-- Dumping structure for table proiect.orders
+CREATE TABLE IF NOT EXISTS `orders` (
+  `order_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `customer_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `status` enum('Comanda noua','Comanda anulata','Comanda livrata','Returnata') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Comanda noua',
+  `total_price` decimal(8,2) NOT NULL,
+  `country` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`order_id`) USING BTREE,
+  KEY `customer_id` (`customer_id`),
+  CONSTRAINT `FK_orders_users` FOREIGN KEY (`customer_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table proiect.orders: ~23 rows (approximately)
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
 INSERT INTO `orders` (`order_id`, `customer_id`, `status`, `total_price`, `country`, `city`, `address`, `created_at`, `updated_at`) VALUES
 	(1, 2, 'Comanda noua', 159.00, 'Romania', 'Baia Mare', 'Str. Mihai Eminescu, nr. 2', '2022-10-22 10:33:44', NULL),
@@ -141,16 +278,61 @@ INSERT INTO `orders` (`order_id`, `customer_id`, `status`, `total_price`, `count
 	(59, 1, 'Comanda noua', 912.00, 'România', 'Baia Sprie', 'Str. Mihai Eminescu, nr. 53', '2022-10-24 19:31:31', '2022-10-24 19:31:31'),
 	(60, 1, 'Comanda noua', 471.00, 'România', 'Baia Sprie', 'Str. Mihai Eminescu, nr. 53', '2022-10-24 19:37:46', '2022-10-24 19:37:46'),
 	(61, 2, 'Comanda noua', 774.00, 'România', 'Baia Sprie', 'Str. Mihai Eminescu, nr. 53', '2022-10-24 19:43:04', '2022-10-24 19:43:04'),
-	(62, 2, 'Comanda noua', 346.00, 'România', 'Baia Sprie', 'Str. Mihai Eminescu, nr. 53', '2022-10-24 19:58:25', '2022-10-24 19:58:25');
+	(62, 2, 'Comanda noua', 346.00, 'România', 'Baia Sprie', 'Str. Mihai Eminescu, nr. 53', '2022-10-24 19:58:25', '2022-10-24 19:58:25'),
+	(63, 1, 'Comanda noua', 177.00, 'România', 'Baia Sprie', 'Str. Mihai Eminescu, nr. 53', '2022-11-04 19:02:05', '2022-11-04 19:02:05'),
+	(64, 2, 'Comanda livrata', 525.00, 'România', 'Baia Sprie', 'Str. Mihai Eminescu, nr. 53', '2022-11-19 15:45:59', '2022-11-19 15:45:59');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+
+-- Dumping structure for table proiect.password_resets
+CREATE TABLE IF NOT EXISTS `password_resets` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_email_index` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table proiect.password_resets: ~0 rows (approximately)
 /*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
 /*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
 
+-- Dumping structure for table proiect.personal_access_tokens
+CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint(20) unsigned NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `expires_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Dumping data for table proiect.personal_access_tokens: ~0 rows (approximately)
 /*!40000 ALTER TABLE `personal_access_tokens` DISABLE KEYS */;
 /*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
+
+-- Dumping structure for table proiect.products
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_category` enum('Genti','Rucsacuri','Portofele') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `product_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_price` decimal(8,2) NOT NULL,
+  `product_color` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `product_price` (`product_price`),
+  KEY `product_image` (`product_image`),
+  KEY `product_name` (`product_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table proiect.products: ~79 rows (approximately)
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
@@ -236,7 +418,24 @@ INSERT INTO `products` (`id`, `product_name`, `description`, `product_category`,
 	(92, 'Rucsac Alexandra', 'Rucsac mediu roz somon', 'Rucsacuri', 2, '1666300595.jpg', 169.00, 'Roz somon', '2022-10-20 21:16:35', '2022-10-20 21:16:35');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 
--- Dumping data for table proiect.users: ~1 rows (approximately)
+-- Dumping structure for table proiect.users
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` int(12) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `is_admin` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`),
+  UNIQUE KEY `phone` (`phone`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table proiect.users: ~2 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `phone`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `is_admin`) VALUES
 	(1, 'Admin', 0, 'admin@example.com', NULL, '$2y$10$oMxiU3TP1sTXeEWPR//3VeSKpKarWrzzXauFOaEkN8Rz0ZmRAzmSy', NULL, '2022-10-19 20:32:10', '2022-10-19 20:32:10', 1),
