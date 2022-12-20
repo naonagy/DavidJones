@@ -28,7 +28,7 @@ table tbody tr:nth-child(odd) {
 	background-color: #ffffff;
 }
     </style>
-    <div class="container-fluid pt-5">
+    <div class="container-fluid pt-5" style="overflow-y: auto">
 
     <table class="w-100">
         <thead>

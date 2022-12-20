@@ -103,7 +103,6 @@ $categorie = strtolower($categorie);
         <h2 class="separator display-6 text-center pb-5 fw-bold"></h2>
       </div>
       <div>
-        <Button> <span><i class="bi bi-heart"></i></span> Adauga la favorite</Button>
         <Button> <span><i class="bi bi-info"></i></span> Cere informatii</Button>
       </div>
     </div>
