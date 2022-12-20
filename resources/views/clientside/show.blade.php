@@ -46,7 +46,7 @@ $categorie = strtolower($categorie);
         <div class="row pt-5 d-flex pb-3">
             <h1 class="fs-2 pb-2 fs-4">{{$product->product_name}}</h1>
             <h2  class="brand fs-5" >
-              David Jones
+              David Janes
             </h2>
         </div>
         <div class="d-flex flex-row py-2">

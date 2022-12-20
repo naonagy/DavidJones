@@ -1,7 +1,12 @@
 
 @extends('layouts.master')
 @section('content')
-
+    <div class="alert alert-danger alert-dismissible text-center" role="alert">
+        <button type="button" class="close text-center" data-dismiss="alert">
+            <i class="fa fa-times"></i>
+        </button>
+        <strong style="background-color: inherit" class="text-center"> Acesta este un site de portofoliu e-commerce. Nu are scop comercial!</strong> {{ session('error') }}
+    </div>
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">

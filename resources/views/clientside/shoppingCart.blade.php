@@ -89,7 +89,7 @@
 
                         @csrf
                         <div class="form-outline form-white mb-4 ">
-                          <input class="rounded-1 w-100" type="text" name="adress" class="form-control form-control-lg" siez="17"
+                          <input class="rounded-1 w-100" type="text" name="address" class="form-control form-control-lg" siez="17"
                             placeholder="Adresa de livrare" required/>
                         </div>
   
