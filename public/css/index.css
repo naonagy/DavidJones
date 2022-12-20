@@ -110,3 +110,11 @@ footer h5{
     font-family: 'Lobster', cursive;
     color: #98b921;
 }
+.bx-wrapper{
+    margin-bottom: 0px!important;
+}
+@media screen and (max-width: 576px) {
+    .slider, .bx-wrapper {
+      display: none;
+    }
+  }

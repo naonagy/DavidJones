@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
+use App\Models\Product;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Orderline;
@@ -129,9 +130,10 @@ class OrderController extends Controller
 
     public function showmyorder($order_id)
     {
+        $products= Product::all();
         $order = Order::findOrFail($order_id);
         $orderline=Orderline::where('order_id', '=', $order_id)->get();
-         return view('clientside.showmyorders', compact('order', 'orderline'));
+         return view('clientside.showmyorders', compact('order', 'orderline', 'products'));
     }
 
 }

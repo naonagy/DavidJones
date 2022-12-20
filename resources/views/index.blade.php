@@ -2,9 +2,9 @@
  @section('content')
 
 
- <div class="container d-flex justify-content-center w-75 h-75 w-md-100">
+ <div class="container d-flex justify-content-center w-75 h-75 w-md-100 mb-0 mb-md-1 mb-lg-2 mb-xl-2">
 
-  <div class="slider">
+  <div class="slider" id="slider">
     <div class="slider-img">
       <img src="{{ URL('storage/i1.png') }}" id="firstslider">
     </div>
@@ -22,8 +22,8 @@
  
 
  <div class="container col-xxl-8 px-4 py-3">
-  <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-    <div class="col-10 col-sm-8 col-lg-6">
+  <div class="row flex-lg-row-reverse align-items-center justify-content-center g-5 py-xl-5 py-lg-5 py-md-5 py-3">
+    <div class="col-12 col-lg-6">
       <img 
       src="{{ URL('storage/img1.jpg') }}" 
       alt="dvjones" 
@@ -103,7 +103,7 @@
 </div>
 
 <div class="container d-flex justify-content-center">
-  <div class="temp1 p-5 w-75 m-5">
+  <div class="temp1 p-xl-5 p-lg-5 p-md-5 p-4 w-75 m-5">
 
   <p class="lead temp1-1 rounded p-3">Noiembrie este luna REDUCERILOR! Tine-te bine si pregateste-te pentru reducerile cutremuratoare pe care le-am pregatit pentru exclusiv pentru tine!</p>
 

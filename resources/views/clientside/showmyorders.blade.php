@@ -2,97 +2,110 @@
 @section('content')
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-10 col-md-offset-1">
-			<div class="row mb-3">
-				<label class="col-sm-2 col-label-form"><b>ID Client</b></label>
-				<div class="col-sm-10" style="text-align: center">
-					<a href="{{ route('customers.show', $order->customer_id) }}">
-						{{ 	$order->customer_id	}}
-					</a>
-				</div>
-				<label class="col-sm-2 col-label-form"><b>ID Comanda</b></label>
-				<div class="col-sm-10" style="text-align: center">
-					{{ 	$order->order_id	}}
-				</div>
-				<label class="col-sm-2 col-label-form"><b>Status Comanda</b></label>
-				<div class="col-sm-10" style="text-align: center">
-					{{ 	$order->status	}}
-				</div>
-			</div>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Cantitate</th>
-                        <th class="text-center">Pret</th>
-                        <th class="text-center">Total</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php $subtotal=0 @endphp
+<section class="h-100 h-custom" style="background-color: #eee;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col">
+          <div class="card">
+            <div class="card-body p-4">
+  
+              <div class="row">
+                <div class="col-lg-7 ">
+                    <div class="d-flex flex-row align-items-center justify-content-between mb-3">
+                        <p class="mb-0">Numar comanda: {{$order->order_id }}</p>
+                    </div>
+                  <hr>
 
-                @foreach ($orderline as $line)
-                    
-                    <tr>
-                        <td class="col-sm-8 col-md-6">
-                        <div class="media">
-                            <div class="media-body">
-								<h4 class="media-heading">
-									<a href="{{ route('products.show', $line->product_id) }}">
-										{{ $line->product_id }}
-									</a>
-								</h4>
-                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
-                            </div>
-                        </div></td>
-                        <td class="col-sm-1 col-md-1" style="text-align: center">
-							{{ $line->quantity }}
-                        </td>
-                        <td class="col-sm-1 col-md-1 text-center"><strong>{{ $line->price_each }} RON</strong></td>
-                        <td class="col-sm-1 col-md-1 text-center"><strong>{{ $line->price_each*$line->quantity }} RON</strong></td>
-                        <td class="col-sm-1 col-md-1">
+                 @php $subtotal=0 @endphp
+                 @forelse ($orderline as $line)
+                 @foreach ($products as $product)
+                    @if ($line->product_id==$product->id)
                         
-                    	</tr>
-                    @php $subtotal += $line->price_each*$line->quantity @endphp
-					@endforeach	
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-row align-items-center">
+                          <div>
+                            <img
+                                src="{{asset('images/'.$product->product_image)}}"
+                                class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+                          </div>
+                          <div class="ms-3">
+                            <h5 class="media-heading fs-5">
+                                <a href="{{ route('produse.show',$product->id)}}">
+                                    {{ $product->product_name }}
+                                </a>
+                            </h5>
+                            <p class="small mb-0 fs-bold">Cod produs: {{ $line->product_id }}</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center flex-wrap">
+                          <div style="width: 50px;">
+                            <h5 class="fw-normal mb-0">{{ $line->quantity }}</h5>
+                          </div>
+                          <div style="width: 80px;">
+                            <h5 class="mb-0">{{ $line->price_each*$line->quantity }} RON</h5>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  @endif
+                 @endforeach
+                @php $subtotal += $line->price_each*$line->quantity @endphp
+                @empty
+                   <h1>Nu exista comanda</h1>
+                @endforelse
+            </div>
 
-                    <tr>
-                        <td> Adresa </td>
-                        <td> {{ $order->address }}  </td>
-                        
-                    </tr>
-                    <tr>
-                        <td> Localitate </td>
-                        <td> {{ $order->city }} </td>
-                        
-                    </tr>
-                    <tr>
-                        <td> Tara </td>
-                        <td> {{ $order->country }} </td>
-                        
-                    </tr>
-					<tr>
-						<td><h5>Subtotal</h5></td>
-                        <td class="text-right"><h5><strong>
-                            {{ $subtotal }} RON
-                        </strong></h5></td>
-					</tr>
-					<tr>
-						<td><h5>Estimated shipping</h5></td>
-                        <td class="text-right"><h5><strong>{{ $deliverycost=18 }} RON</strong></h5></td>
-					</tr>
-					<tr>
-						<td><h3>Total</h3></td>
-                        <td class="text-right"><h3><strong>
-                        {{ $subtotal+$deliverycost }} RON   
-                        </strong></h3></td>
-					</tr>
-                </tbody>
-            </table>
+                <div class="col-lg-5">
+                  <div class="card rounded-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="mb-0 text-center fw-semibold">Date de livrare</h5>
+                      </div>
+                    <div class="mb-4 ">
+                        Adresa de livrare: {{ $order->address }}
+                    </div>
+
+                    <div class="mb-4 ">
+                        Localitate: {{ $order->city }}
+                    </div>
+
+                    <div class="mb-4 ">
+                        Tara: {{ $order->country }}
+                    </div>
+                      <hr class="my-4">
+  
+                      <div class="d-flex justify-content-between">
+                        <p class="mb-2 fw-semibold">Subtotal</p>
+                        <p class="mb-2">{{ $subtotal }} RON</p>
+                      </div>
+  
+                      <div class="d-flex justify-content-between">
+                        <p class="mb-2 fw-semibold">Taxa de livrare</p>
+                        <p class="mb-2">{{ $deliverycost=18 }} RON</p>
+                      </div>
+  
+                      <div class="d-flex justify-content-between mb-4">
+                        <p class="mb-2 fw-semibold">Total</p>
+                        <p class="mb-2">{{ $subtotal+$deliverycost }} RON</p>
+                      </div>
+                    </form>
+  
+                    </div>
+                  </div>
+  
+                </div>
+  
+              </div>
+  
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+</section>
+
+
 @endsection('content')
