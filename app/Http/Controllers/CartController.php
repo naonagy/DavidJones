@@ -171,6 +171,14 @@ class CartController extends Controller
         foreach ($cart as $row)
         {
 
+            $product= Product::where('id', '=', $row->product_id)->latest()->first();
+            $product->quantity = $product->quantity - $row->quantity;
+            $product->save();
+        }
+
+        foreach ($cart as $row)
+        {
+
             $orderline = new Orderline();
             $orderline->order_id = $order_id;
             $orderline->product_id = $row->product_id;
