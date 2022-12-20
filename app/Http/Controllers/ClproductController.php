@@ -16,10 +16,23 @@ class ClproductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $discounts = Discount::all();
-        $data=Product::latest()->paginate(9);
+
+        $data=Product::where([
+            ['product_name', '!=', NULL],
+            [function ($query) use ($request) {
+                if(($term = $request->term))
+                {
+                    $query->orWhere('product_name', 'LIKE', '%' . $term . '%')->get();
+                    $query->orWhere('id', 'LIKE', '%' . $term . '%')->get();
+                    $query->orWhere('description', 'LIKE', '%' . $term . '%')->get();
+                    $query->orWhere('product_color', 'LIKE', '%' . $term . '%')->get();
+                }
+            }]
+        ])->paginate(9);
+
         return view('clientside.products', compact('discounts', 'data'))->with('i',(request()->input('page',1)-1*9));
     }
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DiscountController;
 use App\Models\Discount;
+use App\Models\Order;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('shoppingCart', [CartController::class, 'addToCart'])->name('addToCart');
     Route::post('removeCart', [CartController::class, 'removeCart'])->name('removeCart');
     Route::post('shoppingCart/checkout', [CartController::class, 'checkout'])->name('checkout');
+    Route::get('myorders', [OrderController::class, 'myorders'])->name('myorders');
 });
 
 

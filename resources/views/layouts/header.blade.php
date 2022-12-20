@@ -18,10 +18,25 @@
         Cos de cumparaturi</a></li>
     </ul>
 
-    
-    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-      <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-    </form>
+    <div>
+      <div class="mx-auto pull-right">
+          <div class="">
+              <form action="{{ route("produse.index") }}" method="GET" role="search" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+
+                  <div class="input-group">
+                      <input type="text" class="form-control mr-2" name="term" placeholder="Cauta" id="term">
+                      <span class="input-group-btn mr-5 mt-1">
+                        <button class="btn" type="submit" title="Search projects">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                          </svg>
+                        </button>
+                    </span>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div> 
     @if (Auth::check()) 
       <div class="hidden sm:flex sm:items-center sm:ml-6">
         <x-dropdown align="right" width="48">
@@ -46,7 +61,9 @@
                         {{ __('Log Out') }}
                     </x-dropdown-link>
                   <x-dropdown-link class="bg-white">
-                    Comenzile mele
+                      <a href="{{ route('myorders')}}" class="nav-link px-2 link-dark">
+                        Comenzile mele
+                      </a>
                   </x-dropdown-link>
                 </form>
                 

@@ -120,4 +120,10 @@ class OrderController extends Controller
         return redirect()-> route('orders.index')->with('success',"Produs sters cu succes");
    
     }
+    public function myorders()
+    {
+        $user = Auth::user();
+        $orders = Order::whereBelongsTo($user)->paginate(10);
+        return view('clientside.myorders', compact('orders'))->with('i',(request()->input('page',1)-1*10));
+    }
 }
