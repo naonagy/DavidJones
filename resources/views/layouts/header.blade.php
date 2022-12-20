@@ -61,7 +61,7 @@
                         {{ __('Log Out') }}
                     </x-dropdown-link>
                   <x-dropdown-link class="bg-white">
-                      <a href="{{ route('myorders')}}" class="nav-link px-2 link-dark">
+                      <a href="{{ route('myorders')}}" class="bg-white">
                         Comenzile mele
                       </a>
                   </x-dropdown-link>

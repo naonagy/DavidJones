@@ -58,6 +58,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('removeCart', [CartController::class, 'removeCart'])->name('removeCart');
     Route::post('shoppingCart/checkout', [CartController::class, 'checkout'])->name('checkout');
     Route::get('myorders', [OrderController::class, 'myorders'])->name('myorders');
+    Route::get('showorder/details/{order_id}', [OrderController::class, 'showmyorder'])->name('showmyorder');
 });
 
 

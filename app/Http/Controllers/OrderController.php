@@ -126,4 +126,12 @@ class OrderController extends Controller
         $orders = Order::whereBelongsTo($user)->paginate(10);
         return view('clientside.myorders', compact('orders'))->with('i',(request()->input('page',1)-1*10));
     }
+
+    public function showmyorder($order_id)
+    {
+        $order = Order::findOrFail($order_id);
+        $orderline=Orderline::where('order_id', '=', $order_id)->get();
+         return view('clientside.showmyorders', compact('order', 'orderline'));
+    }
+
 }
